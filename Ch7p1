@@ -19,7 +19,8 @@ end ckt_rtl;
 architecture rtl_behavioral of ckt_rtl is
  
   -- intermediate signal declaration ---------------
-      signal s_mux_result : std_logic_vector(7 downto 0); begin
+  signal s_mux_result : std_logic_vector(7 downto 0); 
+      begin
          ra: process(CLK) -- process
           begin
               if (rising_edge(CLK)) then if (LDA = '1') then
@@ -46,3 +47,5 @@ end rtl_behavioral;
 --Notice that we declared a detailed signal for the registers inputs. Also, notice that for the multiplexer we have to do
 --a more detailed code compared to the one we did in the Synthesis_lab. In this case we specified the 1's and 0's
 --Also, notice that although its only 2 inputs for the multiplexer, we use bundles (8) for each one.
+--Also notice here that we don't make SEL a vector because, we only use one column of 1's and 0's. If we used two
+--columms, we would use a SEL vector of 2.
