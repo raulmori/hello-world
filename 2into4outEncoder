@@ -1,0 +1,40 @@
+
+
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+-- Uncomment the following library declaration if using
+-- arithmetic functions with Signed or Unsigned values
+--use IEEE.NUMERIC_STD.ALL;
+
+-- Uncomment the following library declaration if instantiating
+-- any Xilinx leaf cells in this code.
+--library UNISIM;
+--use UNISIM.VComponents.all;
+
+entity decoder4bits is
+    port
+ (  
+    D_IN : in std_logic_vector(1 downto 0);
+    SZ_OUT : out std_logic_vector(3 downto 0)
+
+);
+
+
+end decoder4bits;
+
+architecture Behavioral of decoder4bits is
+
+begin
+
+SZ_OUT <=
+
+        "00" when (D_IN = "0001") else
+        "01" when (D_IN = "0010") else
+        "10" when (D_IN = "0100") else
+        "11" when (D_IN = "1000") else
+            "00";
+
+
+end Behavioral;
