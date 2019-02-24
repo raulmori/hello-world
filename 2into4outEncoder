@@ -13,7 +13,7 @@ use IEEE.STD_LOGIC_1164.ALL;
 --library UNISIM;
 --use UNISIM.VComponents.all;
 
-entity decoder4bits is
+entity encoder4bits is
     port
  (  
     D_IN : in std_logic_vector(1 downto 0);
@@ -22,9 +22,9 @@ entity decoder4bits is
 );
 
 
-end decoder4bits;
+end encoder4bits;
 
-architecture Behavioral of decoder4bits is
+architecture Behavioral of encoder4bits is
 
 begin
 
