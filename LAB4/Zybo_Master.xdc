@@ -11,10 +11,6 @@ set_property -dict { PACKAGE_PIN F19 IOSTANDARD LVCMOS33 } [get_ports { vga_r[4]
 set_property -dict { PACKAGE_PIN H18 IOSTANDARD LVCMOS33 } [get_ports { vga_g[0] }]; #IO_L14N_T2_AD4N_SRCC_35 Sch=VGA_G0
 set_property -dict { PACKAGE_PIN N20 IOSTANDARD LVCMOS33 } [get_ports { vga_g[1] }]; #IO_L14P_T2_SRCC_34 Sch=VGA_G1
 set_property -dict { PACKAGE_PIN L19 IOSTANDARD LVCMOS33 } [get_ports { vga_g[2] }]; #IO_L9P_T1_DQS_AD3P_35 Sch=VGA_G2
-
-
-
-
 set_property -dict { PACKAGE_PIN J19 IOSTANDARD LVCMOS33 } [get_ports { vga_g[3] }]; #IO_L10N_T1_AD11N_35 Sch=VGA_G3
 set_property -dict { PACKAGE_PIN H20 IOSTANDARD LVCMOS33 } [get_ports { vga_g[4] }]; #IO_L17N_T2_AD5N_35 Sch=VGA_G4
 set_property -dict { PACKAGE_PIN F20 IOSTANDARD LVCMOS33 } [get_ports { vga_g[5] }]; #IO_L15N_T2_DQS_AD12N_35 Sch=VGA=G5
