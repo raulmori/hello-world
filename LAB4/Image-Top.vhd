@@ -17,7 +17,7 @@ architecture rtl of image_top is
       signal addrSig : std_logic_vector(17 downto 0);
       signal pixelSig : std_logic_vector(7 downto 0);
       signal vsSig : std_logic;
-      signal hsSig : : std_logic;
+      signal hsSig :  std_logic;
       signal vidSig : std_logic;
       signal hcountSig : std_logic_vector(9 downto 0);
       signal vcountSig : std_logic_vector(9 downto 0);
@@ -56,13 +56,14 @@ architecture rtl of image_top is
       component picture IS
           PORT (
               clka : IN STD_LOGIC;
-              addra : IN STD_LOGIC_VECTOR(1 7 DOWNTO 0);douta : OUT STD_LOGIC_VECTOR(7 DOWNTO 0)
+              addra : IN STD_LOGIC_VECTOR(7 DOWNTO 0);
+              douta : OUT STD_LOGIC_VECTOR(7 DOWNTO 0)
       );
       end component;
 
 
       begin       --Here we start declaring port maps
-          pixelPusher: pixel_pusher port map(.    --This port map is for PIXER-PUSHER (Part 2)
+          pixelPusher: pixel_pusher port map(                  --This port map is for PIXER-PUSHER (Part 2)
                 clk => clk,
                 en => enSig,
                 vs => vsSig,
