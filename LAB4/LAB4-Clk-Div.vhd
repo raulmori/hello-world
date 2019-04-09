@@ -16,7 +16,8 @@ end clock_div;
   
 architecture Behavioral of clock_div is
   
-    signal prescaler: std_logic_vector(2  downto 0) := "101"; -- 5 in binary signal counter: std_logic_vector(2  downto 0) := "001";
+    signal prescaler: std_logic_vector(2  downto 0) := "101"; -- 5 in binary 
+    signal counter: std_logic_vector(2  downto 0) := "001";
     signal newClock : std_logic := '0';
 
     begin
