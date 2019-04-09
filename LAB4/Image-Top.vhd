@@ -73,7 +73,8 @@ architecture rtl of image_top is
                 G => vga_g,
                 addr => addrSig);
 
-          my_picture: picture port map(clka => clk, --Port map for picture
+          my_picture: picture port map(
+                clka => clk, --Port map for picture
                 addra => addrSig,douta => pixelSig);
 
           clockDiv: clock_div port map(             --This is the port map for clock-divider
