@@ -1,5 +1,5 @@
-libraryieee;
-useieee.std_logic_1164.all;
+library ieee;
+use ieee.std_logic_1164.all;
 
 
 entity vga_ctrl_tb is
@@ -8,19 +8,19 @@ end vga_ctrl_tb;
   
 architecture testbench of vga_ctrl_tb is
 
-      signal clkSig	: std_logic.:='0' ;
-      signal enSig	: std _logic := '0';
-      signal hcountSig	: std_logic_vector ( 9 downto 0 ) := ( others => '0') ;
-      signal vcountSig	: std_logic_vector (9 downto 0 ) := ( others => '0' );
-      signal vidSig	: std_logic := '0' ;
-      signal vsSig	: std_logic := '0' ;
-      signal hsSig	 : std_logic := '0' ;  
+      signal clkSig 	 : std_logic:='0';
+      signal enSig	     : std_logic:= '0';
+      signal hcountSig 	 : std_logic_vector ( 9 downto 0 ) := ( others => '0') ;
+      signal vcountSig	 : std_logic_vector (9 downto 0 ) := ( others => '0' );
+      signal vidSig      : std_logic := '0' ;
+      signal vsSig	     : std_logic := '0' ;
+      signal hsSig	     : std_logic := '0' ;  
   
   
       component vga_ctrl is           --Here we call VGA-CONTROLLER
             Port (
                   clk	: in std_logic ;
-                  en	: in std _logic; 
+                  en	: in std_logic; 
                   hcount, vcount : out std_logic_vector( 9 downto 0 );
                   vid, vs, hs	: out std_logic);
       end component ;
@@ -48,7 +48,7 @@ architecture testbench of vga_ctrl_tb is
                       enSig <='1';
 
                   wait for 10 ns;
-              endloop;
+              end loop;
 
       end process;
 end testbench ;
