@@ -1,5 +1,6 @@
 
-
+--Here the Vivado TEMPLATE used "CONDITIONAL-SIGNAL-ASSIGNMENT"
+--This is a 2-input, 1 output Multiplexer.
 
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
