@@ -1,23 +1,4 @@
-----------------------------------------------------------------------------------
--- Company: 
--- Engineer: 
--- 
--- Create Date: 02/23/2019 03:32:21 AM
--- Design Name: 
--- Module Name: decoder4bit - Behavioral
--- Project Name: 
--- Target Devices: 
--- Tool Versions: 
--- Description: 
--- 
--- Dependencies: 
--- 
--- Revision:
--- Revision 0.01 - File Created
--- Additional Comments:
--- 
-----------------------------------------------------------------------------------
-
+--
 
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
