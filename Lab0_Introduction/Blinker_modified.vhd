@@ -2,7 +2,8 @@
 --There are only two ways the LED can be turned off. When the switch is low, and when the count increased passed the THRESHOLD.
 
 --The 2 counter values for TOTAL, and LED-LOW were halved
---For the LED and SWITCH, since they are variables the name is not relevant.
+--For the LED and SWITCH, since they are variables connected to the "CONSTRAINT" the name is  relevant.
+
 
 library ieee;
 use ieee.std_logic_1164.all;
