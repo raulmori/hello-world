@@ -19,5 +19,5 @@ architecture Behavioral of encoder4bits is
                   "01" when (D_IN = "0010") else
                   "10" when (D_IN = "0100") else
                   "11" when (D_IN = "1000") else
-                      "0000" ;         
+                      "00" ;         
 end Behavioral;
