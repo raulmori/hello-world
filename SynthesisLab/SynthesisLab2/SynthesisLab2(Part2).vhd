@@ -16,30 +16,27 @@ use IEEE.STD_LOGIC_1164.ALL;
 --use UNISIM.VComponents.all;
 
 entity flip_flopD is
-  Port (
-
-CLK,D, CHIP_E : in std_logic;
-Reset : in std_logic;
-Q : out std_logic
-
- );
+        Port (
+            CLK,D, CHIP_E : in std_logic;
+            Reset : in std_logic;
+            Q : out std_logic
+             );
 end flip_flopD;
 
+  
 architecture Behavioral of flip_flopD is
-
-begin
-
-
-process (CLK)
-begin
-   if (CLK'event and CLK ='1') then
-      if Reset='1' then
-        Q <= '0';
-      elsif CHIP_E ='1' then
-         Q <= D;
-      end if;
-   end if;
-end process;
+--Remember this is the code that we took from the Vivado "TEMPLATE"
+      begin
+          process (CLK)
+              begin
+                   if (CLK'event and CLK ='1') then
+                        if Reset='1' then
+                              Q <= '0';
+                        elsif CHIP_E ='1' then      --This is the new part added (The "ENABLE"
+                              Q <= D;
+                        end if;
+                   end if;
+          end process;
 
 end Behavioral;
 
