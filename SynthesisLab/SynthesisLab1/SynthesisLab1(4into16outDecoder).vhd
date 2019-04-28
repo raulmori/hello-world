@@ -1,4 +1,4 @@
---
+--This was suppose to refer to a 4-bit OUTPUT and 2-bit INPUT
 
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
