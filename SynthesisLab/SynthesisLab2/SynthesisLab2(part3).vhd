@@ -1,7 +1,8 @@
 
-----------------------------------------------------------------------------------
 --WE ARE GOING TO USE A D FLIP FLOP SINCE IT IS THE MOST COMMON.
 --REMEMBER THAT D-FLIPFLOPS CREATE AN OUTPUT ON RISING EDGE ONLY
+
+--However in this case we change it to a FALLING-EDGE one.
 
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
