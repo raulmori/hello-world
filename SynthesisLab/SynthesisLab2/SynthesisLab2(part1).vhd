@@ -16,30 +16,27 @@ use IEEE.STD_LOGIC_1164.ALL;
 --use UNISIM.VComponents.all;
 
 entity flip_flopD is
-  Port (
-
-CLK,D : in std_logic;
-Reset : in std_logic;
-Q : out std_logic
-
- );
+      Port (
+            CLK,D : in std_logic;
+            Reset : in std_logic;
+            Q : out std_logic
+           );
 end flip_flopD;
 
+  
 architecture Behavioral of flip_flopD is
 
-begin
-
-
-process (CLK)
-begin
-   if (CLK'event and CLK ='1') then
-      if Reset='1' then
-        Q <= '0';
-      else
-         Q <= D;
-      end if;
-   end if;
-end process;
+      begin
+          process (CLK)
+                begin
+                     if (CLK'event and CLK ='1') then   --Active HIGH means this. That the system works on a "Rising" Clock-Edge
+                          if Reset='1' then
+                            Q <= '0';
+                          else
+                             Q <= D;
+                          end if;
+                     end if;
+          end process;
 
 end Behavioral;
 
