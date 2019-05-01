@@ -76,11 +76,14 @@ architecture rtl of image_top is
                             clk => clk,                               --Here  the MAIN-CLOCK is connected to the INPUT  of the PIXER_PUSHER called "CLK"        
                             en => enSig,                              --Here the TEMPORARY Signal "enSig" (OUTPUT of Clock.Div) is Connected to the INPUT of PIXER_PUSHER called "EN"
                             vs => vsSig,                                   --Here the TEMPORARY Signal "vsSig" (OUTPUT of VGA_CTRL) is Connected to the INPUT of PIXER_PUSHER called "VS"
-                            pixel => pixelSig,hcount => hcountSig,vid => vidSig,
+                            pixel => pixelSig,
+                            hcount => hcountSig,
+                            vid => vidSig,
                             R => vga_r,
                             B => vga_b,
                             G => vga_g,
-                            addr => addrSig);
+                            addr => addrSig
+                            );
     
               my_picture: picture port map(
                             clka => clk,                                        --Here  the MAIN-CLOCK is connected to the INPUT  of the PICTURE called "CLKA" 
@@ -90,13 +93,21 @@ architecture rtl of image_top is
     
               clockDiv: clock_div port map(             --This is the port map for clock-divider
                             clk => clk,                     --Here we connect the MAIN-CLOCK to the "Clock-Divider"
-                            div => enSig);                  --Here the OUTPUT of the "CLOCK.DIV" is Converted into a TEMPORARY Signal called "enSig"
+                            div => enSig
+                            );                  --Here the OUTPUT of the "CLOCK.DIV" is Converted into a TEMPORARY Signal called "enSig"
     
               vgaCTRL: vga_ctrl port map(
                             clk => clk,                                 --Here  the MAIN-CLOCK is connected to the INPUT  of the VGA_CTRL called "CLK"
                             en => enSig,                            --Here the TEMPORARY Signal "enSig" (OUTPUT of Clock.Div) is Connected to the INPUT of VGA_CTRL called "EN"
-                            hcount => hcountSig,vcount => vcountSig,vid => vidSig,
+                            hcount => hcountSig,
+                            vcount => vcountSig,
+                            vid => vidSig,
                             vs => vsSig,                            --Here the OUTPUT of "VGA_CTRL" is converted to the TEMPORARY Signal called "vsSig"
-                            hs => hsSig);
-                            vga_vs <= vsSig;vga_hs <= hsSig;
+                            hs => hsSig
+                            );
+                            
+                            
+          vga_vs <= vsSig;
+          vga_hs <= hsSig;
+                            
 end rtl;
