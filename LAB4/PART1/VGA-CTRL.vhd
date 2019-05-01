@@ -6,7 +6,7 @@ use IEEE.NUMERIC_STD.ALL;
 entity vga_ctrl is
     Port( 
           clk : in std_logic;
-          en : in std_logic;
+          en : in std_logic;                                    --This is the OUTPUT of the "Clock.Div"
           hcount, vcount : out std_logic_vector(9 downto 0);
           vid, vs, hs :out std_logic) ;
 end vga_ctrl;
@@ -22,24 +22,23 @@ architecture rtl of vga_ctrl is
                    begin
                         if rising_edge(clk)  then  
                                 if en = '1' then           
-                                        if (hcountSig = "1100011111") then                  -- This is the Number 799 in Binary
-                                                 hcountSig <= (others => '0');                       --When the "HORIZONTAL-COUNTER"  has reached 799, the "HORIZONTAL-COUNTER" will RESET
-                                                 if (vcountSig = "1000001100") then          -- This is the Number 524 in Binary.
-                                                       vcountSig <= (others => '0');                 --When the "VERTICAL-COUNTER" has reached 524, the "HORIZONTAL-COUNTER" will RESET
-                                                 else
-                                                       vcountSig <= vcountSig + 1;           --The "VERTICAL-COUNTER" will add "1", when the "VERTICAL-COUNTER" has NOT yet reached 524, and the "HORIZONTAL-COUNTER" has been RESET back to "0",  
+                                        if (hcountSig = "1100011111") then                  -- Here the "HORIZONTAL-COUNTER" has counted up to the  Number 799 in Binary
+                                                 hcountSig <= (others => '0');                       --The "HORIZONTAL-COUNTER" will RESET
+                                                 if (vcountSig = "1000001100") then          -- Here the "VERTICAL-COUNTER" has counted up to the  Number 524 in Binary.
+                                                       vcountSig <= (others => '0');                 --The  "VERTICAL-COUNTER" will RESET
+                                                 else                                   -- Here the "VERTICAL-COUNTER" has NOT yet counted up to the  Number 524 in Binary
+                                                       vcountSig <= vcountSig + 1;           --The "VERTICAL-COUNTER" will add "1", when the "VERTICAL-COUNTER" has NOT yet reached 524, and the "HORIZONTAL-COUNTER" has been RESET  to "0",  
                                                  end if;
-                                        else
-                                                hcountSig <= hcountSig + 1;                      --When the "HORIZONTAL-COUNTER" has not yet reached 799, the "HORIZONTAL-COUNTER" will add "1"
+                                        else                                            -- Here the "HORIZONTAL-COUNTER" has NOT yet counted up to the  Number 799 in Binary
+                                                hcountSig <= hcountSig + 1;                      --The "HORIZONTAL-COUNTER" will add "1"
                                         end if;
                                   end if;   
                         end if;
             end process;
 -------------------------------------------------------------------------------
-            
             process(hcountSig, vcountSig) -- process to control display
                     Begin
-                            if hcountSig <= "1001111111" then       -- When the "HORIZONTAL-COUNTER" is in the Number 639 in Binary
+                            if hcountSig <= "1001111111" then       -- When the "HORIZONTAL-COUNTER" is in the Number 639 in Binary.  We don't include the "0" condition because it is Not Necesary
                                     if vcountSig <= "0111011111"  then          --When the "VERTICAL-COUNTER" is in the Number 479 in Binary  
                                     vid <= '1';                                         --This means the "VIDEO" is ON
                             else
