@@ -13,8 +13,8 @@ end vga_ctrl;
 
 
 architecture rtl of vga_ctrl is
-        signal hcountSig : unsigned(9 downto 0) := (others => '0'); -- 10 bit counter to count up to 800 pixels
-        signal vcountSig : unsigned(9 downto 0) := (others =>'0'); -- 10 bit counter to count up to 525 pixels
+        signal hcountSig : unsigned(9 downto 0) := (others => '0'); -- 10 bit counter to count up to 800 pixels. This is a TEMPORARY Signal because it changes
+        signal vcountSig : unsigned(9 downto 0) := (others =>'0'); -- 10 bit counter to count up to 525 pixels. This is a TEMPORARY Signal because it changes
 
  
         Begin
@@ -48,24 +48,24 @@ architecture rtl of vga_ctrl is
                         end if;    
             end process;
 --------------------------------------------------------------------------------                          
-               
+    
             process(hcountSig, vcountSig) -- process to control horizontal sync and vertical sync
                     begin
                             if (hcountSig >= "1010010000" and hcountSig <= "1011101111") then   -- When the the "HORIZONTAL-COUNTER" is Greater-Than, or Equal-To 656 in Binary. and the the "HORIZONTAL-COUNTER" is Less-Than or Equal-To 751 in Binary
-                                 hs <= '0';         --The "Horizontal-Sync" is Set to "0"
+                                 hs <= '0';         --The "Horizontal-Sync-Pulse" is Set to "0"
                             else
                                  hs <= '1';         --If the "HORIZONTAL-COUNTER" is not between the specified Numbers, the "Horizontal-Sync" will be HIGH
                             end if;
-                        
+                            ------------------------------------
                             if (vcountSig >= "0111101010" and vcountSig <= "0111101011") then       -- When the the "VERTICAL-COUNTER" is Greater-Than, or Equal-To 490 in Binary. and Also Less-Than or Equal-To 491 in Binary
-                                 vs <= '0';                 --the "Vertical-Sync" is set to LOW
+                                 vs <= '0';                 --the "Vertical-Sync-Pulse" is set to LOW
                             else                                    --If the "VERTICAL-COUNTER" is not between any of the Numbers Specified Above
-                                vs <= '1';                  --the "Vertical-Sync" is set to HIGH
+                                vs <= '1';                  --the "Vertical-Sync-Pulse" is set to HIGH
                             end if;
             end process;
             
         
-            hcount <= std_logic_vector(hcountSig);      --This is one of the Final outputs
-            vcount <= std_logic_vector(vcountSig);      --This is the other Final output
+            hcount <= std_logic_vector(hcountSig);      --Here the TEMPORARY Signal for the "HORIZONTAL-COUNTER" is connected to the Main OUTPUT of the "HORIZONTAL-COUNTER"
+            vcount <= std_logic_vector(vcountSig);      --Here the TEMPORARY Signal for the "VERTICAL-COUNTER" is connected to the Main OUTPUT of the "VERTICAL-COUNTER"
                 
 end rtl;                        --This ends the ARCHITECTURE
