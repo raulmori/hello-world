@@ -4,6 +4,9 @@
 --Notice that this Parking-System uses two PASSWORDS
 --We should remove the "HEX" because we don't know how to use it.
 
+--This is the Main code, We also need  "TOP-Design", a "CLOCK", a "BUTTON", a "CONSTRAIN file"
+--Notice here that the "RESET" was to not be Synchronous with the "CLOCK"
+
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.std_logic_unsigned.all;
@@ -13,11 +16,11 @@ entity Car_Parking_System_VHDL is
         port 
               (
               clk                           : in std_logic;                                   -- This is the "CLOCK"
-              reset_n                       : in std_logic;                                    -- This is the "RESET", and notice that the BUTTON is Inverted
+              reset                         : in std_logic;                                    -- This is the "RESET", and notice that the BUTTON is Inverted
               front_sensor, back_sensor                 : in std_logic;                             -- two sensor in front and behind the gate of the car parking system   
               password_1, password_2        : in std_logic_vector(1 downto 0);                      -- Two "PASSOWRD's" of 2-bits Each
               
-              GREEN_LED,RED_LED             : out std_logic;                                            -- These are the LEDs
+              GREEN_LED,RED_LED             : out std_logic;                                            -- These are the LEDs. Notice we have 2 LEDS
               HEX_1, HEX_2                  : out std_logic_vector(6 downto 0)                     -- Two options for  what will Display on the Screen. Each one has a total of 7-Bits
               );
 end Car_Parking_System_VHDL;
@@ -32,24 +35,25 @@ architecture Behavioral of Car_Parking_System_VHDL is
 
         begin
             ----------------------------------------------------
-            process(clk,reset_n)                                       --Process for Moving "Current-State" and "Next-State". We added a "RESET" button that will reset the System back to the "STATE" of "IDLE"
+            process(clk,reset)                                       --Process for Switching  "Current-State" to "Next-State". We added a "RESET" button that will reset the System back to the "STATE" of "IDLE". This is a Standard-Part of the Code
+            
                 begin
-                     if(reset_n='0') then                                                    --When the "RESET" button is pressed
+                     if(reset ='1') then                                                    --When the "RESET" button is pressed. Made NOT synchronous.
                           current_state <= IDLE;                                                    --We will go to the "STATE" of "IDLE"   
                      elsif(rising_edge(clk)) then                                            --If the "RESET" Button is not Pressed 
                           current_state <= next_state;                                              --We Continue to the Appropiate "Next-State"
                      end if;
             end process;
             ----------------------------------------------------
-            process(clk,reset_n)                                                      --Process for Waiting  for the "PASSWORD" to be put in 
+            process(clk,reset)                                                      --Process for "STATE" of  Waiting  for the "PASSWORD" to be put in 
                  begin
-                     if(reset_n='0') then                                                                --If the "RESET" BUTTON is Pressed 
-                          counter_wait <= (others => '0');                                                  --This RESETS the "COUNTER". Notice we call the Counter "COUNTER_WAIT"
-                     elsif(rising_edge(clk))then                                                        --If the "RESET" button is not Pressed
+                     if(reset ='1') then                                                                --If the "RESET" BUTTON is Pressed (This button is automatically Pressed not PASSWORD is put in and the Car leave). Made NOT synchronous.
+                          counter_wait <= (others => '0');                                                        --This RESETS the "COUNTER". Notice we call the Counter "COUNTER_WAIT"
+                     elsif(rising_edge(clk))then                                                        --If the "RESET" button is not Pressed, and at the clock Rising Edge
                           if(current_state=WAIT_PASSWORD)then                                                     --And if the Current-State is "WAIT_PASSWORD"
-                             counter_wait <= counter_wait + x"00000001";                                                  --This will add "1" to the "COUNTER" 
-                          else                                                                                     --If the Current-State is not "WAIT_PASSWORD" 
-                             counter_wait <= (others => '0');                                                            --If will Reset the "COUNTER"
+                             counter_wait <= counter_wait + x"00000001";                                                  --We will Start Counting. This will add "1" to the "COUNTER" 
+                          else                                                                                    --If the Current-State is any other "STATE" other than "WAIT_PASSWORD" 
+                             counter_wait <= (others => '0');                                                             --If will Reset the "COUNTER". Basically The "COUNTER" will not Count
                           end if;
                      end if;
             end process;
@@ -75,22 +79,17 @@ architecture Behavioral of Car_Parking_System_VHDL is
                                       end if;
                                    end if;
                              --------------------------------
-                             when WRONG_PASS =>                                                   --When the Current-State is "WRONG_PASS". This "STATE" Lets Gives the Driver another chance to try another "PASSWORD" again
+                             when WRONG_PASS =>                                                   --When the Current-State is "WRONG_PASSWORD". This "STATE" Lets Gives the Driver another chance to try another "PASSWORD" again
                                    if((password_1="01") and (password_2="10")) then                    -- if the following "PASSWORDS were entered.
                                       next_state <= RIGHT_PASS;                                       --It will go to the "STATE' of "RIGHT_PASS" (Opens the GATE)  
                                    else                                                                  --If the Wrong "PASSWORD" was Entered
                                       next_state <= WRONG_PASS;                                               --It will go to the "STATE" of "WRONG_PASS" (holds the GATE closed). The Green LED will Start Blinking 
                               end if;
                              -------------------------------- 
-                             when RIGHT_PASS =>                                            --When the Current-State is "WAIT_PASSWORD". This is when the Correct "PASSWORD" was entered.
-                                   if(front_sensor='1' and back_sensor = '1') then                          --If "FRONT_SENSOR" detects another car at the GATE, while the "BACK_SENSOR" detects there are cars in the Parking Lot still trying to Park.
-                                      next_state <= STOP;                                                     --It will go the "STATE" of "STOP"
-                             -- if the gate is opening for the current car, and the next car come, 
-                             -- STOP the next car and require password
-                             -- the current car going into the car park
-                                   elsif(front_sensor='0' and back_sensor= '1') then                         --If the "BACK_SENSOR" detects there are cars in the Parking Lot still trying to Park. but does not detect other cars waiting at the "GATE"
-                               -- if the current car passed the gate an going into the car park
-                               -- and there is no next car, go to IDLE
+                             when RIGHT_PASS =>                                            --When the Current-State is "RIGHT_PASSWORD". This is when the Correct "PASSWORD" was entered.
+                                   if(front_sensor='1' and back_sensor = '1') then                          --If "FRONT_SENSOR" detects another car at the GATE, while the "BACK_SENSOR" detects there are cars in the Parking Lot still trying to Park. (If the GATE is opening for the Current Car, and the Next Car comes, the GATE will close for the Next Car )
+                                      next_state <= STOP;                                                     --It will go the "STATE" of "STOP" (STOP the Next Car and Require password)
+                                   elsif(front_sensor='0' and back_sensor= '1') then                         --If the "BACK_SENSOR" detects there are cars in the Parking Lot still trying to Park. but does not detect other cars waiting at the "GATE". (if the current car passed the gate an going into the car park, and there is no next car)
                                       next_state <= IDLE;                                                       --It will go to the "STATE" of "IDLE"
                                    else                                                                     --If "BACK_SENSOR" is LOW (all the cars inside the Parking Lot have Parked) , and "FRONT_SENSOR" is HIGH (There is a car at the GATE)
                                       next_state <= RIGHT_PASS;                                     --Assuming the Password was entered Correctly, It will go to the "STATE" of "RIGHT_PASS"
