@@ -26,8 +26,7 @@ entity Car_Parking_System_VHDL is
               front_sensor, back_sensor                 : in std_logic;                             -- two sensor in front and behind the gate of the car parking system   
               pass                          : in std_logic_vector(3 downto 0);                      --  "PASSOWRD's" of 4-bits 
               
-              GREEN_LED,RED_LED             : out std_logic;                                            -- These are the LEDs. Notice we have 2 LEDS
-              HEX_1, HEX_2                  : out std_logic_vector(6 downto 0)                     -- Two options for  what will Display on the Screen. Each one has a total of 7-Bits
+              GREEN_LED,RED_LED             : out std_logic                                            -- These are the LEDs. Notice we have 2 LEDS
               );
 end Car_Parking_System_VHDL;
 
