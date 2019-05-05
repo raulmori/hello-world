@@ -16,6 +16,7 @@
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.std_logic_unsigned.all;
+use IEEE.numeric_std.all;
 
 
 entity Car_Parking_System_VHDL is
@@ -35,8 +36,8 @@ architecture Behavioral of Car_Parking_System_VHDL is
 
         type state_type is (IDLE,ASK_PASS, OPEN_GATE ,STOP);                 --These are the STATES
         signal current_state,next_state: state_type;                                                  --Here we create TEMPORARY SIGNALS FOR THE "Preset-State" and "Next-State"
-        signal counter_wait: std_logic_vector(30 downto 0);                              --This is the TEMPORARY Signal for the 'COUNTER"
-        signal red_tmp, green_tmp: std_logic;                                        --These are the TEMPORARY Signals for the "LED's"
+        signal counter_wait: std_logic_vector(30 downto 0) := (others => '0');                              --This is the TEMPORARY Signal for the 'COUNTER"
+        signal red_tmp, green_tmp: std_logic;                                      --These are the TEMPORARY Signals for the "LED's"
 
         begin
             ----------------------------------------------------
@@ -56,7 +57,7 @@ architecture Behavioral of Car_Parking_System_VHDL is
                           counter_wait <= (others => '0');                                                        --This RESETS the "COUNTER". Notice we call the Counter "COUNTER_WAIT"
                      elsif(rising_edge(clk))then                                                        --If the "RESET" button is not Pressed, and at the clock Rising Edge
                           if(current_state=ASK_PASS)then                                                     --And if the Current-State is "WAIT_PASSWORD"
-                             counter_wait <= counter_wait + x"00000001";                                                  --We will Start Counting. This will add "1" to the "COUNTER" 
+                             counter_wait <= std_logic_vector( unsigned(counter_wait) + 1 );                                                 --We will Start Counting. This will add "1" to the "COUNTER" 
                           else                                                                                    --If the Current-State is any other "STATE" other than "WAIT_PASSWORD" 
                              counter_wait <= (others => '0');                                                             --If will Reset the "COUNTER". Basically The "COUNTER" will not Count
                           end if;
@@ -74,7 +75,7 @@ architecture Behavioral of Car_Parking_System_VHDL is
                                    end if;
                              --------------------------------
                              when ASK_PASS =>                                   --When the Current-State is "ASK_PASS"
-                                   if(counter_wait <= x"1875000000") then                          --This is just another way of writing an INTEGER. If there are 1875000000 Countes (30 seconds) or less Counts (Also known as Ticks or Clock-Cycles). The system will continue waiting for "PASSWORD" to be typed in.
+                                 if(unsigned(counter_wait) < 1875000000) then                          --This is just another way of writing an INTEGER. If there are 1875000000 Countes (30 seconds) or less Counts (Also known as Ticks or Clock-Cycles). The system will continue waiting for "PASSWORD" to be typed in.
                                       next_state <= ASK_PASS;                                    --The Current-State does NOT change, and we remain on the same "STATE" of "WAIT_PASSWORD"
                                    else                                                                    --The system detects that 1875000000 Counts happened, So it will now require a password to be entered
                                        if(pass ="0011")  then                            -- if the following "PASSWORDS were entered.
