@@ -75,7 +75,7 @@ architecture Behavioral of Car_Parking_System_VHDL is
                                    end if;
                              --------------------------------
                              when ASK_PASS =>                                   --When the Current-State is "ASK_PASS"
-                                 if(unsigned(counter_wait) < 1875000000) then                          --This is just another way of writing an INTEGER. If there are 1875000000 Countes (30 seconds) or less Counts (Also known as Ticks or Clock-Cycles). The system will continue waiting for "PASSWORD" to be typed in.
+                                 if(unsigned(counter_wait) < 10) then                          --This is just another way of writing an INTEGER. If there are 1875000000 Countes (30 seconds) or less Counts (Also known as Ticks or Clock-Cycles). The system will continue waiting for "PASSWORD" to be typed in.
                                       next_state <= ASK_PASS;                                    --The Current-State does NOT change, and we remain on the same "STATE" of "WAIT_PASSWORD"
                                    else                                                                    --The system detects that 1875000000 Counts happened, So it will now require a password to be entered
                                        if(pass ="0011")  then                            -- if the following "PASSWORDS were entered.
