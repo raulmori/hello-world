@@ -16,7 +16,7 @@ entity Car_Parking_System_VHDL is
         port 
               (
               clk                           : in std_logic;                                   -- This is the "CLOCK"
-              reset                         : in std_logic;                                    -- This is the "RESET", and notice that the BUTTON is Inverted
+              reset_n                         : in std_logic;                                    -- This is the "RESET", and notice that the BUTTON is Inverted
               front_sensor, back_sensor                 : in std_logic;                             -- two sensor in front and behind the gate of the car parking system   
               password_1, password_2        : in std_logic_vector(1 downto 0);                      -- Two "PASSOWRD's" of 2-bits Each
               
