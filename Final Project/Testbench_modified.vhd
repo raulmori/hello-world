@@ -36,7 +36,7 @@ ARCHITECTURE behavior OF tb_car_parking_system_VHDL IS
         signal GREEN_LED : std_logic;              --Outputs
         signal RED_LED : std_logic;
     
-        constant clk_period : time := 10 ns;          -- Clock period definitions
+        constant clk_period : time := 8 ns;          -- We define our "CLOCK" Period a 8NanoSeconds because we have a Clock-Frequency of 125Mhz
        
  
         BEGIN
@@ -52,35 +52,39 @@ ARCHITECTURE behavior OF tb_car_parking_system_VHDL IS
                       RED_LED => RED_LED
                       );
         
-              clk_process :process            -- Clock process definitions
-                   begin
-                  clk <= '0';
-                  wait for clk_period/2;
-                  clk <= '1';
-                  wait for clk_period/2;
+              clk_process :process            --In this Process we control the "CLOCK's" Voltage OUTPUT.
+                       begin
+                           clk <= '0';                            --Remember that for Half of the Clock-Tick Cycle the Clock is LOW
+                           wait for clk_period/2;                 
+                           clk <= '1';                            --Remember that for the other Half of the Clock-Tick Cycle the Clock is HIGH
+                           wait for clk_period/2;                     --This gives us Half of a Clock Tick Cycle
               end process;
                    
                    
-              stim_proc: process       -- Stimulus process
-                   begin  
-                      reset <= '1';
-                      front_sensor <= '0';
-                      back_sensor <= '0';
-                      Pass <= "0011";
-                             wait for clk_period*10;
-                      reset <= '1';
-                            wait for clk_period*10;
-                      front_sensor <= '1';
-                             wait for clk_period*10;
-                      Pass <= "0011";
-                      back_sensor <= '1';
-                      
-                      front_sensor <= '0';
-                      Pass <= "0011";
-                      back_sensor <= '1';
-                      back_sensor <= '0';
-                          -- insert your stimulus here 
-                      wait;
+              stim_proc: process              --Stimulus process. In this Process we control the Voltage OUTPUT  of the Following Signals
+                       begin  
+                           reset <= '1';
+                           front_sensor <= '0';
+                           back_sensor <= '0';
+                           Pass <= "0000";
+                                 wait for clk_period*10;
+                          
+                           reset <= '0';
+                                 wait for clk_period*10;
+                        
+                           front_sensor <= '1';                             --The Front-Sensor goes HIGH because it detects a Car
+                                 wait for clk_period*10;                          --We Wait for 10 Clock-Periods (80ns), Then We will go to the Next State
+                           Pass <= "0011";                                  --We then Type in the Correct Password, Then we go to the Next State
+                                 wait for clk_period*10; 
+                                
+                           back_sensor <= '1';                                     --The Back-Sensor goes High because it detects a Car
+
+                           front_sensor <= '0';
+                           Pass <= "0011";
+                           back_sensor <= '1';
+                           back_sensor <= '0';
+                               -- insert your stimulus here 
+                           wait;
               end process;
 
 END;
