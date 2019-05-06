@@ -15,8 +15,8 @@ use ieee.std_logic_1164.all;
 entity lab1 is
         port 
           (
-            swt : in std_logic_vector (7 downto 0);             --This is the "SWITCH"
-            led : out std_logic_vector (7 downto 0)             --This is the LED
+            swt : in std_logic_vector (7 downto 0);             --Notice here we use 8 "SWITCH's"
+            led : out std_logic_vector (7 downto 0)             --Notice here we use 8 "LED's" 
           );
 end lab1;
 
