@@ -38,7 +38,7 @@ architecture Behavioral of Car_Parking_System_VHDL is
             process(clk,reset_n)                                       --Process for Switching  "Current-State" to "Next-State". We added a "RESET" button that will reset the System back to the "STATE" of "IDLE". This is a Standard-Part of the Code
             
                 begin
-                     if(reset_n ='1') then                                                    --When the "RESET" button is pressed. Made NOT synchronous.
+                     if(reset_n ='0') then                                                    --When the "RESET" button is pressed. Made NOT synchronous.
                           current_state <= IDLE;                                                    --We will go to the "STATE" of "IDLE"   
                      elsif(rising_edge(clk)) then                                            --If the "RESET" Button is not Pressed 
                           current_state <= next_state;                                              --We Continue to the Appropiate "Next-State"
@@ -47,7 +47,7 @@ architecture Behavioral of Car_Parking_System_VHDL is
             ----------------------------------------------------
             process(clk,reset_n)                                                      --Process for "STATE" of  Waiting  for the "PASSWORD" to be put in 
                  begin
-                     if(reset_n ='1') then                                                                --If the "RESET" BUTTON is Pressed (This button is automatically Pressed not PASSWORD is put in and the Car leave). Made NOT synchronous.
+                     if(reset_n ='0') then                                                                --If the "RESET" BUTTON is Pressed (This button is automatically Pressed not PASSWORD is put in and the Car leave). Made NOT synchronous.
                           counter_wait <= (others => '0');                                                        --This RESETS the "COUNTER". Notice we call the Counter "COUNTER_WAIT"
                      elsif(rising_edge(clk))then                                                        --If the "RESET" button is not Pressed, and at the clock Rising Edge
                           if(current_state=WAIT_PASSWORD)then                                                     --And if the Current-State is "WAIT_PASSWORD"
