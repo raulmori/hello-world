@@ -83,7 +83,6 @@ ARCHITECTURE behavior OF tb_car_parking_system_VHDL IS
                            
                            wait until RED_LED = '1';                  --We were in an "OPEN_GATE" "STATE".  We Wait for some Time, and we are now in the "STOP" "STATE"
                                back_sensor <= '0';                              --The Back-Sensor is changed to LOW  which means the car Crossed the GATE. Remember the Front_Sensor is still HIGH
-                               Pass <= "0000";
                                
                            wait until RED_LED = '0';                  --We were in an "STOP" "STATE".  We Wait for some Time, and we are now in the "ASK_PASS" "STATE" again
                                Pass <= "0011";                                  --Here we type in the Correct Password
