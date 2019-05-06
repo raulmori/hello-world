@@ -27,7 +27,7 @@ entity Car_Parking_System_VHDL is
               front_sensor, back_sensor                 : in std_logic;                             -- two sensor in front and behind the gate of the car parking system   
               pass                          : in std_logic_vector(3 downto 0);                      --  "PASSOWRD's" of 4-bits 
               
-              GREEN_LED,RED_LED             : out std_logic                                            -- These are the LEDs. Notice we have 2 LEDS
+              GREEN_LED, RED_LED             : out std_logic                                            -- These are the LEDs. Notice we have 2 LEDS
               );
 end Car_Parking_System_VHDL;
 
@@ -36,7 +36,7 @@ architecture Behavioral of Car_Parking_System_VHDL is
 
         type state_type is (IDLE,ASK_PASS, OPEN_GATE ,STOP);                 --These are the STATES
         signal current_state,next_state: state_type;                                                  --Here we create TEMPORARY SIGNALS FOR THE "Preset-State" and "Next-State"
-        signal counter_wait: std_logic_vector(30 downto 0) := (others => '0');                              --This is the TEMPORARY Signal for the 'COUNTER"
+        signal counter_wait: std_logic_vector(2 downto 0) := (others => '0');                              --This is the TEMPORARY Signal for the 'COUNTER"
         signal red_tmp, green_tmp: std_logic;                                      --These are the TEMPORARY Signals for the "LED's"
 
         begin
@@ -141,7 +141,7 @@ architecture Behavioral of Car_Parking_System_VHDL is
              end process;
             ----------------------------------------------------
          
-         RED_LED <= red_tmp  ;                                                              --The TEMPORARY Red LED Signal is Converted to the MAIN "RED_LED" "OUTPUT"
+         RED_LED <= red_tmp;                                                              --The TEMPORARY Red LED Signal is Converted to the MAIN "RED_LED" "OUTPUT"
          GREEN_LED <= green_tmp;                                                            --The TEMPORARY Green LED Signal is Converted to the MAIN "RED_LED" "OUTPUT"
 
 end Behavioral;
