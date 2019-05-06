@@ -90,8 +90,8 @@ architecture Behavioral of Car_Parking_System_VHDL is
                                       next_state <= STOP;                                                     --It will go to the "STATE" of "STOP" (The Gate Will Close For the Next Car). This is if it Detects another Car waiting at the GATE
                                    elsif(front_sensor='0' and back_sensor= '1') then                         --If the "BACK_SENSOR" detects there are cars in the Parking Lot still trying to Park. but does not detect other cars waiting at the "GATE". (if the current car passed the gate an going into the car park, and there is no next car)
                                       next_state <= IDLE;                                                       --It will go to the "STATE" of "IDLE". This is if No Other Cars are Detected at the GATE
-                                   else                                                                     --If "BACK_SENSOR" is LOW (all the cars inside the Parking Lot have Parked) , and "FRONT_SENSOR" is HIGH (There is a car at the GATE)
-                                      next_state <= IDLE;                                     --This is just good VHDL Programming Practice. It will return to the "STATE" of "RIGHT_PASS" .This just Keeps the GATE open for any other conditions 
+                                                                                                       --If "BACK_SENSOR" is LOW (all the cars inside the Parking Lot have Parked) , and "FRONT_SENSOR" is HIGH (There is a car at the GATE)
+                                                                           --This is just good VHDL Programming Practice. It will return to the "STATE" of "RIGHT_PASS" .This just Keeps the GATE open for any other conditions 
                              end if;
                               --------------------------------
                              when STOP =>                                                           --When in the "STATE" of "STOP"  (This works similarly to the "WRONG_PASS" "STATE"). The Gate will Remain close
