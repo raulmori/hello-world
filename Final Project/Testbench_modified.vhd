@@ -61,28 +61,41 @@ ARCHITECTURE behavior OF tb_car_parking_system_VHDL IS
               end process;
                    
                    
-              stim_proc: process              --Stimulus process. In this Process we control the Voltage OUTPUT  of the Following Signals
-                       begin  
-                           reset <= '1';
-                           front_sensor <= '0';
-                           back_sensor <= '0';
-                           Pass <= "0000";
-                                 wait for clk_period*10;
+              stim_proc: process                        --Stimulus process. In this Process we control the Voltage OUTPUT  of the Following Signals
+                       begin                                        --We Start by Changing all the Signals to LOW
+                               reset <= '1';                                    --We Turn "RESET" to HIGH. This will turn all Signals to LOW       
+                               front_sensor <= '0';
+                               back_sensor <= '0';
+                               Pass <= "0000";
                           
-                           reset <= '0';
-                                 wait for clk_period*10;
-                        
-                           front_sensor <= '1';                             --The Front-Sensor goes HIGH because it detects a Car
-                                 wait for clk_period*10;                          --We Wait for 10 Clock-Periods (80ns), Then We will go to the Next State
-                           Pass <= "0011";                                  --We then Type in the Correct Password, Then we go to the Next State
-                                 wait for clk_period*10; 
-                                
-                           back_sensor <= '1';                                     --The Back-Sensor goes High because it detects a Car
-
-                           front_sensor <= '0';
-                           Pass <= "0011";
-                           back_sensor <= '1';
-                           back_sensor <= '0';
+                           wait for clk_period*10;                  --We were in an "UNKNOWN" "STATE".  We Wait for some Time, and we are now in the "IDLE" "STATE" 
+                               reset <= '0';                                    --The "RESET" is changed back to LOW
+                            
+                           wait for clk_period*10;                  --We were in an "IDLE" "STATE".  We Wait for some Time, and we continue being in the "IDLE" "STATE" 
+                               front_sensor <= '1';                             --The Front-Sensor goes HIGH which means it detects a Car
+                          
+                           wait for clk_period*10;                  --We were in an "IDLE" "STATE".  We Wait for some Time, and we are now in the "ASK_PASS" "STATE"
+                               Pass <= "0011";                                  --Here we type in the Correct Password
+                              
+                           wait for clk_period*10;                  --We were in an "ASK_PASS" "STATE".  We Wait for some Time, and we are now in the "OPEN_GATE" "STATE"
+                               back_sensor <= '1';                              --The Back-Sensor is changed to High which mean the car Crosses the GATE. Remember the Front_Sensor is still HIGH
+                              
+                           wait for clk_period*10;                  --We were in an "OPEN_GATE" "STATE".  We Wait for some Time, and we are now in the "STOP" "STATE"
+                               back_sensor <= '0';                              --The Back-Sensor is changed to LOW  which means the car Crossed the GATE. Remember the Front_Sensor is still HIGH
+                             
+                           wait for clk_period*10;                  --We were in an "STOP" "STATE".  We Wait for some Time, and we are now in the "ASK_PASS" "STATE" again
+                               Pass <= "0011";                                  --Here we type in the Correct Password
+                             
+                          wait for clk_period*10;                  --We were in an "ASK_PASS" "STATE".  We Wait for some Time, and we are now in the "OPEN_GATE" "STATE"
+                               back_sensor <= '1';                              --The Back-Sensor is changed to High which mean the car Crosses the GATE. Remember the Front_Sensor is still HIGH
+                               
+                          wait for clk_period*10;                  --We were in an "OPEN_GATE" "STATE".  We Wait for some Time, and we are now in the "STOP" "STATE"
+                               back_sensor <= '0';                              --The Back-Sensor is changed to LOW  which means the car Crossed the GATE.     
+                               front_sensor <= '0';                             -- The Front_Sensor is changed to LOW
+                               
+                          wait for clk_period*10;                  --We were in an "STOP" "STATE".  We Wait for some Time, and we are now in the "IDLE" "STATE" 
+                               
+                               
                                -- insert your stimulus here 
                            wait;
               end process;
