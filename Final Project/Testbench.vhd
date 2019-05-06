@@ -60,6 +60,7 @@ ARCHITECTURE behavior OF tb_car_parking_system_VHDL IS
                   wait for clk_period/2;
               end process;
                    
+                   
               stim_proc: process       -- Stimulus process
                    begin  
                       reset <= '1';
