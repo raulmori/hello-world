@@ -5,7 +5,7 @@ use IEEE.STD_LOGIC_1164.ALL;
 entity sender_top is
         Port (
                    clk : in STD_LOGIC;               --This is the "CLOCK"
-                   btn : in STD_LOGIC;  
+                   btn : in STD_LOGIC_VECTOR (2 downto 0); 
                    SW : out STD_LOGIC_VECTOR (1 downto 0);
                    LED : out STD_LOGIC_VECTOR (1 downto 0);
 
@@ -39,20 +39,20 @@ architecture Structural of sender_top is
           
           rstdbnc: debounce port map(
                                      clk => clk,        --Here we connect the MAIN-CLOCK to one of the "BUTTONS"
-                                     btn => btn,     --Here we connect one of the MAIN "Bit-Button" to the INPUT of one of our BUTTON called "BTN"
+                                     btn => btn(0),     --Here we connect one of the MAIN "Bit-Button" to the INPUT of one of our BUTTON called "BTN"
                                      dbnc => rstbtn
                                     );
 
             Pass1: debounce port map(
                                      clk => clk,        --Here we connect the MAIN-CLOCK to one of the "BUTTONS"
-                                     btn => btn,     --Here we connect one of the MAIN "Bit-Button" to the INPUT of one of our BUTTON called "BTN"
-                                     dbnc => Front
+                                     btn => btn(1),     --Here we connect one of the MAIN "Bit-Button" to the INPUT of one of our BUTTON called "BTN"
+                                     dbnc => PassOut1
                                     );
           
            Pass2: debounce port map(
                                      clk => clk,        --Here we connect the MAIN-CLOCK to one of the "BUTTONS"
-                                     btn => btn,     --Here we connect one of the MAIN "Bit-Button" to the INPUT of one of our BUTTON called "BTN"
-                                     dbnc => Front
+                                     btn => btn(2),     --Here we connect one of the MAIN "Bit-Button" to the INPUT of one of our BUTTON called "BTN"
+                                     dbnc => PassOut2
                                     );
             
           CarParking:  Car_Parking_System_VHDL port map
