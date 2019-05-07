@@ -6,12 +6,13 @@ entity sender_top is
         Port (
                    clk : in STD_LOGIC;               --This is the "CLOCK"
                    btn : in STD_LOGIC;  
+                   SW : out STD_LOGIC_VECTOR (1 downto 0);
                    LED : out STD_LOGIC_VECTOR (1 downto 0);
 
           
 architecture Structural of sender_top is
           
-          
+          signal rstbtn, btn1: std_logic;
           
           ---------------------------------
           component Car_Parking_System_VHDL                       --Here we call "UART" which is another TOP-DESIGN
@@ -61,5 +62,8 @@ architecture Structural of sender_top is
                                     front_sensor =>             --we are going to have to hook up the sensors to Switches
                                     back_sensor =>              --we are going to have to hook up the sensors to switches
                                     pass = >                    --we must use a smaller passwor because we will use 2 buttons
-                                    GREEN_LED =>
-                                    RED_LED =>
+                                    GREEN_LED => led(0)
+                                    RED_LED => led(1)
+
+         <=  RED_LED   
+         <=  GREEN_LED                                      
