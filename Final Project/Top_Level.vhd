@@ -53,23 +53,26 @@ architecture Structural of sender_top is
                     
           begin
           
-          rstdbnc: debounce port map(
-                                     clk => clk,        --Here we connect the MAIN-CLOCK to one of the "BUTTONS"
-                                     btn => btn(0),     --Here we connect one of the MAIN "Bit-Button" to the INPUT of one of our BUTTON called "BTN"
-                                     dbnc => rstbtn
-                                    );
+
 
             Pass1: debounce port map(
                                      clk => clk,        --Here we connect the MAIN-CLOCK to one of the "BUTTONS"
-                                     btn => btn(1),     --Here we connect one of the MAIN "Bit-Button" to the INPUT of one of our BUTTON called "BTN"
+                                     btn => btn(0),     --Here we connect one of the MAIN "Bit-Button" to the INPUT of one of our BUTTON called "BTN"
                                      dbnc => PassOut1
                                     );
           
            Pass2: debounce port map(
                                      clk => clk,        --Here we connect the MAIN-CLOCK to one of the "BUTTONS"
-                                     btn => btn(2),     --Here we connect one of the MAIN "Bit-Button" to the INPUT of one of our BUTTON called "BTN"
+                                     btn => btn(1),     --Here we connect one of the MAIN "Bit-Button" to the INPUT of one of our BUTTON called "BTN"
                                      dbnc => PassOut2
                                     );
+                                    
+          rstdbnc: debounce port map
+                                    (
+                                    clk => clk,        --Here we connect the MAIN-CLOCK to one of the "BUTTONS"
+                                    btn => btn(2),     --Here we connect one of the MAIN "Bit-Button" to the INPUT of one of our BUTTON called "BTN"
+                                    dbnc => rstbtn
+                                   );                   
            switcheroo1: switcher port map
                                     (                       
                                     clk => clk,
