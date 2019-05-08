@@ -24,8 +24,8 @@ entity Car_Parking_System_VHDL is
               (
               clk                           : in std_logic;                                   -- This is the "CLOCK"
               reset                         : in std_logic;                                    -- This is the "RESET", and notice that the BUTTON is Inverted
-              front_sensor, back_sensor                 : in std_logic;                             -- two sensor in front and behind the gate of the car parking system   
-              pass                          : in std_logic_vector(3 downto 0);                      --  "PASSOWRD's" of 4-bits 
+              front_sensor, back_sensor     : in std_logic;                             -- two sensor in front and behind the gate of the car parking system   
+              pass                          : in std_logic_vector(1 downto 0);                      --  "PASSOWRD's" of 4-bits 
               
               GREEN_LED, RED_LED             : out std_logic                                            -- These are the LEDs. Notice we have 2 LEDS
               );
@@ -78,7 +78,7 @@ architecture Behavioral of Car_Parking_System_VHDL is
                                  if(unsigned(counter_wait) < 4) then                          --This is just another way of writing an INTEGER. If there are 1875000000 Countes (30 seconds) or less Counts (Also known as Ticks or Clock-Cycles). The system will continue waiting for "PASSWORD" to be typed in.
                                       next_state <= ASK_PASS;                                    --The Current-State does NOT change, and we remain on the same "STATE" of "WAIT_PASSWORD"
                                    else                                                                    --The system detects that 1875000000 Counts happened, So it will now require a password to be entered
-                                       if(pass ="0011")  then                            -- if the following "PASSWORDS were entered.
+                                       if(pass ="01")  then                            -- if the following "PASSWORDS were entered.
                                            next_state <= OPEN_GATE;                                                  --It will go to the "STATE' of "RIGHT_PASS" (Opens the GATE)                  
                                        else                                                          --If the Wrong "PASSWORD" was Entered
                                            next_state <= ASK_PASS;                                   --It will go to the "STATE" of "WRONG_PASS" (holds the GATE closed). The Green LED will Start Blinking  
