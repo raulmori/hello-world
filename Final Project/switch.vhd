@@ -23,7 +23,7 @@ architecture behavior of switcher is
                         if rising_edge(clk) then                                --Remember any action happens on a CLOCK-tick
                                 if (sw = '0') then                                 --This means if the SWITCH is OFF
                                     output <= '0';                        --The LED is turned off
-                                else               -- when "SWITCH" is HIGH
+                                elsif (sw = '1') then              -- when "SWITCH" is HIGH      
                                     output <= '1';                 
                                 end if;
                         end if;
