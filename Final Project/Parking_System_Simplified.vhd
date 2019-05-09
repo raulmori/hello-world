@@ -1,4 +1,4 @@
--- fpga4student.com FPGA projects, Verilog projects, VHDL projects
+
 -- VHDL project: VHDL code for car parking system
 
 --Notice that this Parking-System uses two PASSWORDS
