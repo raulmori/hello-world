@@ -19,7 +19,7 @@ ARCHITECTURE behavior OF tb_car_parking_system_VHDL IS
              reset : IN  std_logic;
              front_sensor : IN  std_logic;
              back_sensor : IN  std_logic;
-             Pass : IN  std_logic_vector(3 downto 0);
+             Pass : IN  std_logic_vector(1 downto 0);
              
              GREEN_LED : OUT  std_logic;
              RED_LED : OUT  std_logic
@@ -30,7 +30,7 @@ ARCHITECTURE behavior OF tb_car_parking_system_VHDL IS
         signal reset : std_logic := '0';
         signal front_sensor : std_logic := '0';
         signal back_sensor : std_logic := '0';
-        signal pass : std_logic_vector(3 downto 0) := (others => '0');
+        signal pass : std_logic_vector(1 downto 0) := (others => '0');
       
         signal GREEN_LED : std_logic;              --Outputs
         signal RED_LED : std_logic;
@@ -65,7 +65,7 @@ ARCHITECTURE behavior OF tb_car_parking_system_VHDL IS
                                reset <= '1';                                    --We Turn "RESET" to HIGH. This will turn all Signals to LOW       
                                front_sensor <= '0';
                                back_sensor <= '0';
-                               Pass <= "0000";
+                               Pass <= "00";
                           
                            wait for clk_period*10;                  --We were in an "UNKNOWN" "STATE".  We Wait for some Time, and we are now in the "IDLE" "STATE" 
                                reset <= '0';                                    --The "RESET" is changed back to LOW
@@ -74,22 +74,22 @@ ARCHITECTURE behavior OF tb_car_parking_system_VHDL IS
                                front_sensor <= '1';                             --The Front-Sensor goes HIGH which means it detects a Car
                           
                            wait for clk_period*10;                  --We were in an "IDLE" "STATE".  We Wait for some Time, and we are now in the "ASK_PASS" "STATE"
-                               Pass <= "0011";                                  --Here we type in the Correct Password
+                               Pass <= "01";                                  --Here we type in the Correct Password
                               
                            wait until GREEN_LED = '1';            --We were in an "ASK_PASS" "STATE".  We Wait for some Time, and we are now in the "OPEN_GATE" "STATE"
                                back_sensor <= '1';                              --The Back-Sensor is changed to High which mean the car Crosses the GATE. Remember the Front_Sensor is still HIGH
-                               Pass <= "0000";
+                               Pass <= "00";
                            
                            wait until RED_LED = '1';                  --We were in an "OPEN_GATE" "STATE".  We Wait for some Time, and we are now in the "STOP" "STATE"
                                back_sensor <= '0';                              --The Back-Sensor is changed to LOW  which means the car Crossed the GATE. Remember the Front_Sensor is still HIGH
                                
                            wait until RED_LED = '0';                  --We were in an "STOP" "STATE".  We Wait for some Time, and we are now in the "ASK_PASS" "STATE" again
-                               Pass <= "0011";                                  --Here we type in the Correct Password
+                               Pass <= "01";                                  --Here we type in the Correct Password
                              
                            wait until GREEN_LED = '1';                  --We were in an "ASK_PASS" "STATE".  We Wait for some Time, and we are now in the "OPEN_GATE" "STATE"
                                back_sensor <= '1';                              --The Back-Sensor is changed to High which mean the car Crosses the GATE. Remember the Front_Sensor is still HIGH
                                front_sensor <= '0';
-                               Pass <= "0000";
+                               Pass <= "00";
                                
                            wait until GREEN_LED = '0';                  --We were in an "OPEN_GATE" "STATE".  We Wait for some Time, and we are now in the "STOP" "STATE"
                                back_sensor <= '0';                              --The Back-Sensor is changed to LOW  which means the car Crossed the GATE.     
