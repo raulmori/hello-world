@@ -14,8 +14,8 @@ use IEEE.STD_LOGIC_1164.ALL;
 entity decoder4bits is
         port
             (  
-            D_IN : in std_logic_vector(3 downto 0);
-            SZ_OUT : out std_logic_vector(1 downto 0)
+            D_IN : in std_logic_vector(1 downto 0);
+            SZ_OUT : out std_logic_vector(3 downto 0)
             );
 end decoder4bits;
 
